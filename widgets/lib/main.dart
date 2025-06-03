@@ -10,12 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Widget',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
-
       home: const MyHomePage(title: 'Criando Widget'),
     );
   }
@@ -35,42 +33,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      // widget 'Scaffold' faciliata muitas coisas como dar a propriedade de posiçionamento com o 'appbar'
-      appBar: AppBar(       // widget 'AppBar' sendo pasado na propriedade appbar
+    final List<String> MeuNome = [    // Lista de 'nome e sobrenome' do profissional
+      'Luis',
+      'Henrique',
+      'Silva',
+      'Ferreira',
+    ];
+
+    return Scaffold(
+      appBar: AppBar(      // Widget 'Scaffold' facilita muitas coisas como dar a propriedade de posicionamento com o 'appbar'
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Título'),
+        title: Text(widget.title),
       ),
 
-      body: Center(   // widget 'Center' centraliza o conteúdo na tela
-        child: Column(    // widget 'Column' é utilizado para inserir widgets um embaixo do outro
+      body: Center(     // Widget 'Center' centraliza o conteúdo na tela        
+        child: Column(
           children: [
-            Text(    // widget 'Text' permite inserir textos
+            Text(
               'Dois widgets Containers!!!',
-              style: TextStyle(     // propriedade 'style' que passa um widget chamado 'TextStyle' que permite formatar o texto
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
+              style: TextStyle(     // Propriedade 'style' que passa um widget chamado 'TextStyle' que permite formatar o texto                
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
               ),
             ),
 
-            Row(   // widget 'Row' é semelhante ao Column mas ao invés de dispor os elementos na 'vertical' ele dispõe na 'horizontal'
+            Row(    // Widget 'Row' é semelhante ao Column, mas ao invés de dispor os elementos na 'vertical' ele dispõe na 'horizontal'              
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[   // propriedade 'children' é um array, que permite passar varios  widgets
-                Container(        // widget 'Container' é semelhante a uma div
+              children: <Widget>[
+                Container(    // Widget 'Container' é semelhante a uma div                  
                   height: 80,
                   width: 80,
                   color: Colors.red,
                 ),
-
-                SizedBox(width: 12),      // widget 'SizedBox' permite dar um espaçamento entre coisas
-
+                SizedBox(width: 12),    // Widget 'SizedBox' permite dar um espaçamento entre coisas
                 Container(
                   height: 80,
                   width: 80,
@@ -79,20 +81,58 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
 
-            SizedBox(height: 50),     // dando espaço na altura
+            SizedBox(height: 50),   // Dando espaço na altura
 
-            Row(    // linha de icones
-              mainAxisAlignment: MainAxisAlignment.center,    // propriedade 'mainAxisAlignment' perminte alinha o conteúdo ao centro
+            Row(
+              // Linha de ícones
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.access_alarm, size: 48, color: Colors.blue),    // icone de relógio
-                Icon(Icons.account_circle, size: 60, color: Colors.blue),   // iconde de círculo
+                Icon(Icons.access_alarm, size: 48, color: Colors.blue),   // Ícone de relógio
+                Icon(Icons.account_circle, size: 60, color: Colors.blue),   // Ícone de círculo
               ],
+            ),
+
+            const SizedBox(height: 30),
+
+            const Text(
+              'Profissional:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 10),
+            
+            SizedBox(
+              height: 200,    // define altura da ListView
+              child: ListView.builder(
+                itemCount: MeuNome.length,    // 'itemCount' indica quantos widgets serão renderizados
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(Icons.person),    // propriedade 'leading' permite inserir ícones
+                    title: Text(MeuNome[index]),    // o título de ListTile será um texto com itens da lista de 'nome e sobrenome'
+                    trailing: Container(    // utilizando 'Container' dentro da propriedade 'trailing' para criar uma 'Row' e inserir mais de um icone
+                      width: 60,
+                      child: Row(
+                        children: [
+                          Icon(Icons.edit),
+                          SizedBox(width: 4),
+                          GestureDetector(      // widget 'GestureDetector' permite adicionar comportamentos aos widgets
+                            onTap: () {
+                              print('deletando');   // após botão de delete for clicado aparecerá essa menssagem
+                            },
+                            child: Icon(Icons.delete),   // widget que receberá o toque
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(     // propriedade 'floatingActionButton' passando widget 'FloatingActionButton' resposável por criar um botão
+      floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
