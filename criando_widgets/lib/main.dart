@@ -40,9 +40,23 @@ class ListaContatos extends StatelessWidget {     // widget 'ListaContatos'
       ),
 
       body: ListView.builder(        
-        itemBuilder: (context, index) => ListTile(
+        itemBuilder: (context, index) => LinhaContato(contato: contatos[index],),
+        itemCount: contatos.length,
+      ),
+    );
+  }
+}
+
+class LinhaContato extends StatelessWidget {
+  const LinhaContato({required this.contato});
+
+  final String contato;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
           leading: Icon(Icons.person_outline),
-          title: Text(contatos[index],
+          title: Text(contato,
           ),
           trailing: Container(
             width: 60,
@@ -54,9 +68,6 @@ class ListaContatos extends StatelessWidget {     // widget 'ListaContatos'
               ],
             ),
           ),
-        ),
-        itemCount: contatos.length,
-      ),
-    );
+        );
   }
 }
